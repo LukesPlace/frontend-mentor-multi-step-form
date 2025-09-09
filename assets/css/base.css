@@ -1,0 +1,109 @@
+:root {
+    /* Primary Colors */
+  --primary-blue: hsl(213, 96%, 18%);
+  --purple-600: hsl(243, 100%, 62%);
+  --blue-300: hsl(228, 100%, 84%);
+  --blue-200: hsl(206, 94%, 87%);
+  --validation: hsl(354, 84%, 57%);
+
+  /* Neutral Colors */
+  --grey-500: hsl(231, 11%, 63%);
+  --purple-200: hsl(229, 24%, 87%);
+  --blue-100: hsl(218, 100%, 97%);
+  --blue-50: hsl(231, 100%, 99%);
+  --white: hsl(0, 100%, 100%);
+}
+
+/* === CSS Reset === */
+
+/* Box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set sensible line-height and improve text rendering */
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-family: system-ui, sans-serif;
+}
+
+/* Body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+/* Remove list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* Anchor defaults */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Images and media scale properly */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form elements inherit font */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+  outline: none;
+  border: none;
+}
+
+/* Buttons reset */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Tables reset */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Custom CSS */
+
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+}
+
+button {
+  display: flex;
+  color: var(--white);
+  background-color: var(--primary-blue);
+  width: 8rem;
+  height: 3rem;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  height: 3rem;
+  border-radius: 10px;
+  border: solid 1px var(--purple-200);
+  padding: 1rem;
+}
