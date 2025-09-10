@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import Toggle from './toggle.vue';
+import { ref } from 'vue';
+import FrequencySelector from './frequency-selector.vue';
 
+const selectedPlan = ref(null);
+const isYearly = ref(false);
 </script>
 
 <template>
@@ -10,29 +13,34 @@ import Toggle from './toggle.vue';
   </div>
   <div class="content-content">
     <div class="plans">
-      <div class="plan arcade">
-        <img src="../../assets/images/icon-arcade.svg"></img>
-        <div>
-          <span>Arcade</span>
-          <p class="content-description">$9/mo</p>
+      <label class="plan" :class="{selected: selectedPlan == 'arcade'}">
+        <input type="radio" name="plan" value="arcade" v-model="selectedPlan" />
+        <img src="../../assets/images/icon-arcade.svg" alt="Arcade" />
+        <div class="plan-details">
+          <span class="plan-type">Arcade</span>
+          <p class="text-secondary">$9/mo</p>
         </div>
-      </div>
-      <div class="plan advanced">
-        <img src="../../assets/images/icon-advanced.svg"></img>
-        <div>
-          <span>Advanced</span>
-          <p class="content-description">$12/mo</p>
+      </label>
+
+      <label class="plan" :class="{selected: selectedPlan == 'advanced'}">
+        <input type="radio" name="plan" value="advanced" v-model="selectedPlan" />
+        <img src="../../assets/images/icon-advanced.svg" alt="Advanced" />
+        <div class="plan-details">
+          <span class="plan-type">Advanced</span>
+          <p class="text-secondary">$12/mo</p>
         </div>
-      </div>
-      <div class="plan pro">
-        <img src="../../assets/images/icon-pro.svg"></img>
-        <div>
-          <span>Pro</span>
-          <p class="content-description">$15/mo</p>
+      </label>
+
+      <label class="plan" :class="{selected: selectedPlan == 'pro'}">
+        <input type="radio" name="plan" value="pro" v-model="selectedPlan" />
+        <img src="../../assets/images/icon-pro.svg" alt="Pro" />
+        <div class="plan-details">
+          <span class="plan-type">Pro</span>
+          <p class="text-secondary">$15/mo</p>
         </div>
-      </div>
+      </label>
     </div>
-    <Toggle></Toggle>
+    <FrequencySelector v-model="isYearly"></FrequencySelector>
   </div>
 </template>
 
@@ -60,7 +68,27 @@ import Toggle from './toggle.vue';
   justify-content: space-between;
 }
 
+.plan:hover {
+  background-color: var(--purple-200);
+  cursor: pointer;
+}
+
 .plan img {
   width: 40%;
+  height: auto;
+}
+
+.plan-type {
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+/* hide the radio but keep it accessible */
+.plan input[type="radio"] {
+  display: none;
+}
+
+.selected {
+  background-color: var(--purple-200);
 }
 </style>

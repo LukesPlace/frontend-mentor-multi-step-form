@@ -107,3 +107,12 @@ input {
   border: solid 1px var(--purple-200);
   padding: 1rem;
 }
+
+.text-secondary {
+    color: var(--grey-500);
+}
+
+.content-description {
+  color: var(--grey-500);
+  padding-bottom: 3rem;
+}
