@@ -4,16 +4,18 @@ import step from './components/step.vue';
 import PersonalInfo from './components/personal-info.vue';
 import SelectPlan from './components/select-plan.vue';
 import AddOns from './components/add-ons.vue';
+import Summary from './components/summary.vue';
+
 interface Step {
   id: string;
   description: string;
 }
 
 const steps: Array<Step> = [
-  { id: crypto.randomUUID(), description: "YOUR INFO"},
-  { id: crypto.randomUUID(), description: "SELECT PLAN"},
-  { id: crypto.randomUUID(), description: "ADD-ONS"},
-  { id: crypto.randomUUID(), description: "SUMMARY"},
+  { id: crypto.randomUUID(), description: "YOUR INFO" },
+  { id: crypto.randomUUID(), description: "SELECT PLAN" },
+  { id: crypto.randomUUID(), description: "ADD-ONS" },
+  { id: crypto.randomUUID(), description: "SUMMARY" },
 ]
 
 const currentStep = ref(1);
@@ -23,12 +25,14 @@ const currentStep = ref(1);
   <div class="wrapper">
     <div class="form-wrapper">
       <ol class="step-tracker">
-        <step v-for="(step, index) in steps" :key="step.id" :description="step.description" :number="index + 1" :current-step="currentStep"></step>
+        <step v-for="(step, index) in steps" :key="step.id" :description="step.description" :number="index + 1"
+          :current-step="currentStep"></step>
       </ol>
       <div class="form-content">
         <PersonalInfo v-if="currentStep === 1"></PersonalInfo>
         <SelectPlan v-if="currentStep === 2"></SelectPlan>
         <AddOns v-if="currentStep === 3"></AddOns>
+        <Summary v-if="currentStep === 4"></Summary>
         <div class="content-footer">
           <div>
             <button v-if="currentStep !== 1" @click="currentStep -= 1" class="secondary-button">Go back</button>
@@ -41,7 +45,6 @@ const currentStep = ref(1);
 </template>
 
 <style>
-
 .wrapper {
   background-color: var(--blue-100);
   width: 100vw;
