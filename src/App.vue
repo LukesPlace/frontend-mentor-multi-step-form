@@ -6,6 +6,15 @@ import SelectPlan from './components/select-plan.vue';
 import AddOns from './components/add-ons.vue';
 import Summary from './components/summary.vue';
 
+export interface FormDetails {
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  plan: 'arcade' | 'advanced' | 'pro' | null;
+  isYearly: boolean;
+  addOns: Array<'onlineService' | 'largerStorage' | 'customizableProfile'> | null;
+}
+
 interface Step {
   id: string;
   description: string;
@@ -18,6 +27,15 @@ const steps: Array<Step> = [
   { id: crypto.randomUUID(), description: "SUMMARY" },
 ]
 
+const formDetails: FormDetails = ref({
+  name: null,
+  email: null,
+  phone: null,
+  plan: null,
+  isYearly: false,
+  addOns: []
+});
+
 const currentStep = ref(1);
 </script>
 
@@ -29,10 +47,10 @@ const currentStep = ref(1);
           :current-step="currentStep"></step>
       </ol>
       <div class="form-content">
-        <PersonalInfo v-if="currentStep === 1"></PersonalInfo>
-        <SelectPlan v-if="currentStep === 2"></SelectPlan>
-        <AddOns v-if="currentStep === 3"></AddOns>
-        <Summary v-if="currentStep === 4"></Summary>
+        <PersonalInfo v-if="currentStep === 1" v-model="formDetails"></PersonalInfo>
+        <SelectPlan v-if="currentStep === 2" v-model="formDetails"></SelectPlan>
+        <AddOns v-if="currentStep === 3" v-model="formDetails"></AddOns>
+        <Summary v-if="currentStep === 4" v-model="formDetails"></Summary>
         <div class="content-footer">
           <div>
             <button v-if="currentStep !== 1" @click="currentStep -= 1" class="secondary-button">Go back</button>

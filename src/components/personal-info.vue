@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+const formDetails = defineModel();
 </script>
 
 
@@ -10,15 +12,15 @@
   <div class="content-content">
     <div class="personal-info-input">
       <label for="name">Name</label>
-      <input id="name" placeholder="e.g. Stephen King"></input>
+      <input id="name" placeholder="e.g. Stephen King" v-model="formDetails.name"></input>
     </div>
     <div class="personal-info-input">
       <label for="emailAddress">Email Address</label>
-      <input id="emailAddress" placeholder="e.g. stephenking@lorem.com"></input>
+      <input id="emailAddress" placeholder="e.g. stephenking@lorem.com" v-model="formDetails.email"></input>
     </div>
     <div class="personal-info-input">
       <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" placeholder="e.g. +1 234 567 890"></input>
+      <input id="phoneNumber" placeholder="e.g. +1 234 567 890" v-model="formDetails.phone"></input>
     </div>
   </div>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { FormDetails } from '@/App.vue';
 import { ref, type Ref } from 'vue';
 
-
+const formDetails = defineModel<FormDetails>();
 const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizableProfile'>>([]);
 </script>
 
@@ -14,7 +15,7 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
     <ol class="add-on-list">
       <li class="add-on">
         <label for="onlineService" class="add-on-label" :class="{ selected : selectedAddOns.includes('onlineService') }">
-          <input type="checkbox" id="onlineService" value="onlineService" v-model="selectedAddOns"/>
+          <input type="checkbox" id="onlineService" value="onlineService" v-model="formDetails.addOns"/>
           <span class="custom-checkbox"></span>
           <div class="add-on-details">
             <div class="add-on-description">
@@ -27,7 +28,7 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
       </li>
       <li class="add-on">
         <label for="largerStorage" class="add-on-label" :class="{ selected : selectedAddOns.includes('largerStorage') }">
-          <input type="checkbox" id="largerStorage" value="largerStorage" v-model="selectedAddOns"/>
+          <input type="checkbox" id="largerStorage" value="largerStorage" v-model="formDetails.addOns"/>
           <span class="custom-checkbox"></span>
           <div class="add-on-details">
             <div class="add-on-description">
@@ -40,7 +41,7 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
       </li>
       <li class="add-on">
         <label for="customizableProfile" class="add-on-label" :class="{ selected : selectedAddOns.includes('customizableProfile') }">
-          <input type="checkbox" id="customizableProfile" value="customizableProfile" v-model="selectedAddOns"/>
+          <input type="checkbox" id="customizableProfile" value="customizableProfile" v-model="formDetails.addOns"/>
           <span class="custom-checkbox"></span>
           <div class="add-on-details">
             <div class="add-on-description">

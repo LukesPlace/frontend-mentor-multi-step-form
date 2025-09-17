@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import FrequencySelector from './frequency-selector.vue';
+import { FormDetails } from '@/App.vue';
+import { plans } from '@/data/plans';
 
-const selectedPlan = ref(null);
-const isYearly = ref(false);
+const formDetails = defineModel<FormDetails>();
 </script>
 
 <template>
@@ -13,34 +13,16 @@ const isYearly = ref(false);
   </div>
   <div class="content-content">
     <div class="plans">
-      <label class="plan" :class="{selected: selectedPlan == 'arcade'}">
-        <input type="radio" name="plan" value="arcade" v-model="selectedPlan" />
-        <img src="../../assets/images/icon-arcade.svg" alt="Arcade" />
+      <label v-for="plan in plans" :class="[{selected: formDetails.plan ==  plan.value}, 'plan']">
+        <input type="radio" :name="plan.value" :value="plan.value" v-model="formDetails.plan" />
+        <img :src="`../../assets/images/${plan.src}`" :alt="plan.name" />
         <div class="plan-details">
-          <span class="plan-type">Arcade</span>
-          <p class="text-secondary">$9/mo</p>
-        </div>
-      </label>
-
-      <label class="plan" :class="{selected: selectedPlan == 'advanced'}">
-        <input type="radio" name="plan" value="advanced" v-model="selectedPlan" />
-        <img src="../../assets/images/icon-advanced.svg" alt="Advanced" />
-        <div class="plan-details">
-          <span class="plan-type">Advanced</span>
-          <p class="text-secondary">$12/mo</p>
-        </div>
-      </label>
-
-      <label class="plan" :class="{selected: selectedPlan == 'pro'}">
-        <input type="radio" name="plan" value="pro" v-model="selectedPlan" />
-        <img src="../../assets/images/icon-pro.svg" alt="Pro" />
-        <div class="plan-details">
-          <span class="plan-type">Pro</span>
-          <p class="text-secondary">$15/mo</p>
+          <span class="plan-type">{{ plan.name }}</span>
+          <p class="text-secondary">${{plan.cost}}/mo</p>
         </div>
       </label>
     </div>
-    <FrequencySelector v-model="isYearly"></FrequencySelector>
+    <FrequencySelector v-model="formDetails.isYearly"></FrequencySelector>
   </div>
 </template>
 

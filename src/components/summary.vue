@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import { FormDetails } from '@/App.vue';
+import { plans } from '@/data/plans';
+import { computed } from 'vue';
+const formDetails = defineModel<FormDetails>();
+const selectedPlan = computed(() => plans.filter(p => p.value == formDetails.plan));
+console.log("formDetails.plan", formDetails.value);
+console.log("selected", selectedPlan.value)
+console.log("plans", plans);
+
+watchEffect(() => {
+  console.log('formDetails.plan =', JSON.stringify(formDetails.plan));
+  console.log('matching plan =', plans.find(p => p.value === formDetails.plan));
+});
 </script>
 
 <template>
@@ -11,10 +24,10 @@
     <div class="summary">
       <div class="selected-plan-wrapper">
         <div class="selected-plan">
-          <span class="plan">Arcade (Monthly)</span>
+          <span class="plan">{{selectedPlan.name}} ({{ (formDetails.isYearly ? 'Yearly' : 'Monthly') }})</span>
           <a>Change</a>
         </div>
-        <span class="price">$9/mo</span>
+        <span class="price">${{selectedPlan.cost}}/mo</span>
       </div>
       <div class="spacer"></div>
       <ul class="selected-add-ons">
