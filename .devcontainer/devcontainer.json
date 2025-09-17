@@ -1,0 +1,10 @@
+{
+  "name": "Vue3 + TS",
+  "dockerFile": "../Dockerfile",
+  "context": "..",
+  "workspaceFolder": "/app",
+  "extensions": [
+    "Vue.volar",
+    "dbaeumer.vscode-eslint"
+  ]
+}
