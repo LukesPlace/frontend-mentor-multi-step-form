@@ -75,12 +75,6 @@ defineExpose({ validate });
 .personal-info-input input {
   margin-bottom: 1rem;
 }
-.error {
-  border-color: var(--validation);
-}
-.validation {
-  color: var(--validation);
-}
 
 .label-wrapper {
   display: flex;

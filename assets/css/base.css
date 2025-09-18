@@ -116,3 +116,11 @@ input {
   color: var(--grey-500);
   padding-bottom: 3rem;
 }
+
+.error {
+  border-color: var(--validation) !important;
+}
+
+.validation {
+  color: var(--validation) !important;
+}

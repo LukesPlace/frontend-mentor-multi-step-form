@@ -2,14 +2,17 @@
 import FrequencySelector from './frequency-selector.vue';
 import { type FormDetails } from '@/App.vue';
 import { plans } from '@/data/plans';
+import { ref } from 'vue';
 
 const formDetails = defineModel<FormDetails>({required: true});
+const hasError = ref(false);
 
 function validate() {
   let valid = true;
 
   if(!formDetails.value.plan) {
     valid = false;
+    hasError.value = true;
   }
 
   return valid;
@@ -23,15 +26,17 @@ defineExpose({ validate });
   <div class="content-header">  
     <h1>Select your plan</h1>
     <p class="content-description">You have the option of monthly or yearly billing.</p>
+    <p v-if="hasError" class="validation">Please select a plan</p>
   </div>
   <div class="content-content">
     <div class="plans">
-      <label v-for="plan in plans" :key="plan.value" :class="[{selected: formDetails.plan ==  plan.value}, 'plan']">
+      <label v-for="plan in plans" :key="plan.value" :class="[{selected: formDetails.plan ==  plan.value}, {error: hasError}, 'plan']">
         <input type="radio" :name="plan.value" :value="plan.value" v-model="formDetails.plan" />
         <img :src="`../../assets/images/${plan.src}`" :alt="plan.name" />
         <div class="plan-details">
           <span class="plan-type">{{ plan.name }}</span>
-          <p class="text-secondary">${{plan.cost}}/mo</p>
+          <p v-if="formDetails.isYearly" class="text-secondary">${{plan.yearlyCost}}/yr</p>
+          <p v-else class="text-secondary">${{plan.monthlyCost}}/mo</p>
         </div>
       </label>
     </div>
@@ -86,4 +91,5 @@ defineExpose({ validate });
 .selected {
   background-color: var(--purple-200);
 }
+
 </style>

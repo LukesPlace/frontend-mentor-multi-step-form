@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type FormDetails } from '@/App.vue';
 import { ref } from 'vue';
+import { addOns } from '@/data/add-ons';
 
 const formDetails = defineModel<FormDetails>({ required: true });
 const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizableProfile'>>([]);
@@ -13,42 +14,17 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
   </div>
   <div class="content-content">
     <ol class="add-on-list">
-      <li class="add-on">
-        <label for="onlineService" class="add-on-label" :class="{ selected : selectedAddOns.includes('onlineService') }">
-          <input type="checkbox" id="onlineService" value="onlineService" v-model="formDetails.addOns"/>
+      <li v-for="addOn in addOns" :key="addOn.value" class="add-on">
+        <label :for="addOn.value" class="add-on-label" :class="{ selected : selectedAddOns.includes(addOn.value as 'onlineService' | 'largerStorage' | 'customizableProfile') }">
+          <input type="checkbox" :id="addOn.value" :value="addOn.value" v-model="formDetails.addOns"/>
           <span class="custom-checkbox"></span>
           <div class="add-on-details">
             <div class="add-on-description">
-              <span class="title">Online service</span>
-              <span class="text-secondary">Access to multiplayer games</span>
+              <span class="title">{{addOn.name}}</span>
+              <span class="text-secondary">{{addOn.description}}</span>
             </div>
-            <span class="price">+$2/mo</span>
-          </div>
-        </label>
-      </li>
-      <li class="add-on">
-        <label for="largerStorage" class="add-on-label" :class="{ selected : selectedAddOns.includes('largerStorage') }">
-          <input type="checkbox" id="largerStorage" value="largerStorage" v-model="formDetails.addOns"/>
-          <span class="custom-checkbox"></span>
-          <div class="add-on-details">
-            <div class="add-on-description">
-              <span class="title">Larger storage</span>
-              <span class="text-secondary">Extra 1TB of cloud save</span>
-            </div>
-            <span class="price">+$2/mo</span>
-          </div>
-        </label>
-      </li>
-      <li class="add-on">
-        <label for="customizableProfile" class="add-on-label" :class="{ selected : selectedAddOns.includes('customizableProfile') }">
-          <input type="checkbox" id="customizableProfile" value="customizableProfile" v-model="formDetails.addOns"/>
-          <span class="custom-checkbox"></span>
-          <div class="add-on-details">
-            <div class="add-on-description">
-              <span class="title">Customizable Profile</span>
-              <span class="text-secondary">Custom theme on your profile</span>
-            </div>
-            <span class="price">+$2/mo</span>
+            <span v-if="formDetails.isYearly" class="price">+${{addOn.yearlyCost}}/yr</span>
+            <span v-else class="price">+${{addOn.monthlyCost}}/mo</span>
           </div>
         </label>
       </li>
