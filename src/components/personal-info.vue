@@ -1,6 +1,37 @@
 <script setup lang="ts">
+import { type FormDetails } from '@/App.vue';
+import { computed, ref, type Ref } from 'vue';
 
-const formDetails = defineModel();
+
+const formDetails = defineModel<FormDetails>({required: true});
+const errorMessages: Ref<Array<string>> = ref([]);
+
+const hasNameError = computed(() => errorMessages.value.includes('name'));
+const hasEmailError = computed(() => errorMessages.value.includes('email'));
+const hasPhoneError = computed(() => errorMessages.value.includes('phone'));
+
+function validate() {
+  let valid = true;
+
+  if(!formDetails.value.name) {
+    valid = false;
+    errorMessages.value.push('name');
+  }
+
+  if(!formDetails.value.email) {
+    valid = false;
+    errorMessages.value.push('email');
+  }
+
+  if(!formDetails.value.phone) {
+    valid = false;
+    errorMessages.value.push('phone');
+  }
+
+  return valid;
+}
+
+defineExpose({ validate });
 </script>
 
 
@@ -11,16 +42,25 @@ const formDetails = defineModel();
   </div>
   <div class="content-content">
     <div class="personal-info-input">
-      <label for="name">Name</label>
-      <input id="name" placeholder="e.g. Stephen King" v-model="formDetails.name"></input>
+      <div class="label-wrapper">
+        <label for="name">Name</label>
+        <span v-if="hasNameError" class="validation">This field is required</span>
+      </div>
+      <input :class="{ error: hasNameError}" id="name" placeholder="e.g. Stephen King" v-model="formDetails.name"/>
     </div>
     <div class="personal-info-input">
-      <label for="emailAddress">Email Address</label>
-      <input id="emailAddress" placeholder="e.g. stephenking@lorem.com" v-model="formDetails.email"></input>
+      <div class="label-wrapper">
+        <label for="emailAddress">Email Address</label>
+        <span v-if="hasEmailError" class="validation">This field is required</span>
+      </div>
+      <input :class="{ error: hasEmailError}" id="emailAddress" placeholder="e.g. stephenking@lorem.com" v-model="formDetails.email"/>
     </div>
     <div class="personal-info-input">
-      <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" placeholder="e.g. +1 234 567 890" v-model="formDetails.phone"></input>
+      <div class="label-wrapper">
+        <label for="phoneNumber">Phone Number</label>
+        <span v-if="hasPhoneError" class="validation">This field is required</span>
+      </div>
+      <input :class="{ error: hasPhoneError}" id="phoneNumber" placeholder="e.g. +1 234 567 890" v-model="formDetails.phone"/>
     </div>
   </div>
 </template>
@@ -34,5 +74,16 @@ const formDetails = defineModel();
 
 .personal-info-input input {
   margin-bottom: 1rem;
+}
+.error {
+  border-color: var(--validation);
+}
+.validation {
+  color: var(--validation);
+}
+
+.label-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

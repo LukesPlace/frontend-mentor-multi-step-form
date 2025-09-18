@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { FormDetails } from '@/App.vue';
-import { ref, type Ref } from 'vue';
+import { type FormDetails } from '@/App.vue';
+import { ref } from 'vue';
 
-const formDetails = defineModel<FormDetails>();
+const formDetails = defineModel<FormDetails>({ required: true });
 const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizableProfile'>>([]);
 </script>
 

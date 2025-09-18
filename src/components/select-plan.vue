@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import FrequencySelector from './frequency-selector.vue';
-import { FormDetails } from '@/App.vue';
+import { type FormDetails } from '@/App.vue';
 import { plans } from '@/data/plans';
 
-const formDetails = defineModel<FormDetails>();
+const formDetails = defineModel<FormDetails>({required: true});
+
+function validate() {
+  let valid = true;
+
+  if(!formDetails.value.plan) {
+    valid = false;
+  }
+
+  return valid;
+}
+
+defineExpose({ validate });
+
 </script>
 
 <template>
@@ -13,7 +26,7 @@ const formDetails = defineModel<FormDetails>();
   </div>
   <div class="content-content">
     <div class="plans">
-      <label v-for="plan in plans" :class="[{selected: formDetails.plan ==  plan.value}, 'plan']">
+      <label v-for="plan in plans" :key="plan.value" :class="[{selected: formDetails.plan ==  plan.value}, 'plan']">
         <input type="radio" :name="plan.value" :value="plan.value" v-model="formDetails.plan" />
         <img :src="`../../assets/images/${plan.src}`" :alt="plan.name" />
         <div class="plan-details">

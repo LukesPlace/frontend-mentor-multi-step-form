@@ -6,5 +6,8 @@
   "extensions": [
     "Vue.volar",
     "dbaeumer.vscode-eslint"
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
   ]
 }
