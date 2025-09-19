@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { FormDetails } from '@/App.vue';
+import { type FormDetails } from '@/App.vue';
 import { plans } from '@/data/plans';
 import { computed } from 'vue';
 import { addOns } from '@/data/add-ons';
 
 const formDetails = defineModel<FormDetails>({ required: true });
 const selectedPlan = computed(() => plans.find(p => p.value == formDetails.value.plan));
-const selectedAddOns = computed(() => addOns.filter(ao => formDetails.value.addOns.includes(ao.value as 'onlineService' | 'largerStorage' | 'customizableProfile')));
+const selectedAddOns = computed(() => addOns.filter(ao => formDetails.value.addOns.includes(ao.value as 'onlineService' | 'largerStorage' | 'customizableProfile')) ?? null);
 
 const total = computed(() => {
   let total = 0;
   
   if(formDetails.value.isYearly) {
-    total += selectedPlan.value?.yearlyCost;
+    total += selectedPlan.value!.yearlyCost;
 
     selectedAddOns.value.forEach(ao => {
       total += ao.yearlyCost;
@@ -21,7 +21,7 @@ const total = computed(() => {
     return total;
   }
 
-  total += selectedPlan.value?.monthlyCost;
+  total += selectedPlan.value!.monthlyCost;
 
   selectedAddOns.value.forEach(ao => {
     total += ao.monthlyCost;
@@ -42,13 +42,13 @@ const total = computed(() => {
     <div class="summary">
       <div class="selected-plan-wrapper">
         <div class="selected-plan">
-          <span class="plan">{{selectedPlan.name}} ({{ (formDetails.isYearly ? 'Yearly' : 'Monthly') }})</span>
+          <span class="plan">{{selectedPlan!.name}} ({{ (formDetails.isYearly ? 'Yearly' : 'Monthly') }})</span>
           <a>Change</a>
         </div>
         <span v-if="formDetails.isYearly" class="price">${{selectedPlan?.yearlyCost}}/yr</span>
         <span v-else class="price">${{selectedPlan?.monthlyCost}}/mo</span>
       </div>
-      <div class="spacer"></div>
+      <div v-if="selectedAddOns.length > 0" class="spacer"></div>
       <ul class="selected-add-ons">
         <li v-for="addOn in selectedAddOns" :key="addOn.value">
           <span class="text-secondary">{{addOn.name}}</span>
@@ -68,11 +68,11 @@ const total = computed(() => {
 <style scoped>
 
 a {
-  color: var(--purple-600)
+  color: var(--grey-500);
+  text-decoration: solid 2px underline;
 }
 a:hover {
   cursor:pointer;
-  text-decoration: solid 2px underline;
 }
 .summary {
   display: flex;

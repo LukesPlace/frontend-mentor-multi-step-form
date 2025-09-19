@@ -37,6 +37,7 @@ defineExpose({ validate });
           <span class="plan-type">{{ plan.name }}</span>
           <p v-if="formDetails.isYearly" class="text-secondary">${{plan.yearlyCost}}/yr</p>
           <p v-else class="text-secondary">${{plan.monthlyCost}}/mo</p>
+          <span v-if="formDetails.isYearly" class="yearly-promo-text">2 months free</span>
         </div>
       </label>
     </div>
@@ -50,6 +51,7 @@ defineExpose({ validate });
 .content-content {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .plans {
@@ -91,6 +93,40 @@ defineExpose({ validate });
 
 .selected {
   background-color: var(--purple-200);
+  border-color: var(--purple-600);
 }
 
+.yearly-promo-text {
+  color: var(--primary-blue);
+  font-size: small;
+}
+
+@media screen and (max-width: 480px) {
+
+  content.header {
+    padding-bottom: 0;
+  }
+  .plans {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .plan {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 1rem;
+
+  }
+
+  .plan img {
+    width: 50px;
+    height: auto;
+  }
+}
 </style>

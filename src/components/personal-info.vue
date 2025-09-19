@@ -36,7 +36,7 @@ defineExpose({ validate });
 
 
 <template>
-  <div class="content-header">  
+  <div class="content-header">
     <h1>Personal info</h1>
     <p class="content-description">Please provide your name, email address, and phone number.</p>
   </div>
@@ -79,5 +79,22 @@ defineExpose({ validate });
 .label-wrapper {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: x-large;
+  }
+
+  .label-wrapper {
+    font-size: small;
+  }
+
+  .content-description {
+    padding-bottom: 1rem;
+  }
+  .personal-info-input input {
+    border-radius: 5px;
+  }
 }
 </style>

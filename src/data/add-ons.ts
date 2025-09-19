@@ -3,8 +3,8 @@ export const addOns = [
     name: "Online service",
     value: "onlineService",
     description: "Access to multiplayer games",
-    monthlyCost: 2,
-    yearlyCost: 20,
+    monthlyCost: 1,
+    yearlyCost: 10,
   },
   {
     name: "Larger storage",

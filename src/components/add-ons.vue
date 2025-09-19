@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { type FormDetails } from '@/App.vue';
-import { ref } from 'vue';
 import { addOns } from '@/data/add-ons';
 
 const formDetails = defineModel<FormDetails>({ required: true });
-const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizableProfile'>>([]);
 </script>
 
 <template>
@@ -15,13 +13,13 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
   <div class="content-content">
     <ol class="add-on-list">
       <li v-for="addOn in addOns" :key="addOn.value" class="add-on">
-        <label :for="addOn.value" class="add-on-label" :class="{ selected : selectedAddOns.includes(addOn.value as 'onlineService' | 'largerStorage' | 'customizableProfile') }">
+        <label :for="addOn.value" class="add-on-label" :class="{ selected : formDetails.addOns.includes(addOn.value as 'onlineService' | 'largerStorage' | 'customizableProfile') }">
           <input type="checkbox" :id="addOn.value" :value="addOn.value" v-model="formDetails.addOns"/>
           <span class="custom-checkbox"></span>
           <div class="add-on-details">
             <div class="add-on-description">
               <span class="title">{{addOn.name}}</span>
-              <span class="text-secondary">{{addOn.description}}</span>
+              <span class="text-secondary description">{{addOn.description}}</span>
             </div>
             <span v-if="formDetails.isYearly" class="price">+${{addOn.yearlyCost}}/yr</span>
             <span v-else class="price">+${{addOn.monthlyCost}}/mo</span>
@@ -36,7 +34,7 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
 <style scoped>
 
 .selected {
-  background-color: var(--purple-200)
+  background-color: var(--blue-100)
 }
 .add-on-list {
   display: flex;
@@ -93,7 +91,6 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
   color: var(--purple-600);
 }
 
-
 /* Hide native checkbox */
 .add-on-label input {
   position: absolute;
@@ -118,6 +115,18 @@ const selectedAddOns = ref<Array<'onlineService' | 'largerStorage' | 'customizab
   background-size: 16px;
   background-repeat: round;
 }
+.title {
+  font-weight: bold;
+  color: var(--primary-blue);
+}
 
+
+@media screen and (max-width: 480px) {
+
+  .description {
+    font-size: small;
+  }
+
+}
 
 </style>

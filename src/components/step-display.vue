@@ -55,4 +55,10 @@ const isCurrentStep = computed(() => (props.currentStep === props.number));
   color: black;
   border: none;
 }
+
+@media screen and ( max-width: 480px) {
+  .step-text {
+    display: none;
+  }
+};
 </style>

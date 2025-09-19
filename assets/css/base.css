@@ -132,6 +132,7 @@ input {
   color: var(--grey-500);
 }
 
+
 .content-description {
   color: var(--grey-500);
   padding-bottom: 3rem;
@@ -143,4 +144,14 @@ input {
 
 .validation {
   color: var(--validation) !important;
+}
+
+@media screen and (max-width: 480px) {
+  .content-description {
+    padding-bottom: 2rem;
+  }
+
+  .content-header {
+    padding-right: 5%;
+  }
 }

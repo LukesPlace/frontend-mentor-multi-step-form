@@ -65,13 +65,16 @@
           <ThankYou v-if="currentStep === 5"></ThankYou>
         </div>
         <div v-if="currentStep !== 5" class="content-footer">
-          <div> <button v-if="currentStep !== 1" @click="currentStep -= 1" class="secondary-button">Go back</button>
-          </div> <button @click="nextStep">{{ currentStep !== 4 ? 'Next Step' : 'Confirm' }}</button>
+          <div> 
+            <button v-if="currentStep !== 1" @click="currentStep -= 1" class="secondary-button">Go back</button>
+          </div>
+          <button @click="nextStep">{{ currentStep !== 4 ? 'Next Step' : 'Confirm' }}</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <style>
  .wrapper {
    background-color: var(--blue-100);
@@ -118,12 +121,9 @@
    max-height: 25rem;
  }
  
- /* Remove max height as there is no footer for this step */
- .steps:has(.thank-you-wrapper) {
-  display: flex;
-  align-items: center;
+ /* Center content as there is no footer for this step */
+ .form-content:has(.thank-you-wrapper) {
   justify-content: center;
-  height: 100%;
   max-height: none;
 }
 
@@ -131,5 +131,78 @@
    display: flex;
    justify-content: space-between;
  }
+
+@media screen and (max-width: 480px) {
+  .wrapper {
+    background-color: var(--blue-100);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .form-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100vw; 
+    height: 100vh;
+    background-color: var(--blue-50);
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .step-tracker {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    padding-top: 2rem;
+    border-radius: 0;
+    top: 0;
+    width: 100vw;
+    height: 12rem;
+    background-image: url('assets/images/bg-sidebar-mobile.svg');
+    background-size: cover;
+    gap: 1rem;
+  }
+
+  .form-content {
+    position: relative;
+    top: -1rem;
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 2rem;
+    width: 90%;
+    height: auto;
+    min-height: 30rem;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    align-self: center;
+  }
+   /* Remove max height as there is no footer for this step */
+  .steps:has(.thank-you-wrapper) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-height: none;
+  }
+
+  .steps {
+    max-height: none;
+  }
+
+  .content-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 5rem;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: var(--white);
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+}
 
 </style>
