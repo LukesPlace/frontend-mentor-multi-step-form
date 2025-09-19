@@ -70,6 +70,7 @@ defineExpose({ validate });
 
 .plan:hover {
   background-color: var(--purple-200);
+  transition: 0.5s;
   cursor: pointer;
 }
 

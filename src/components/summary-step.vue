@@ -2,16 +2,34 @@
 import { FormDetails } from '@/App.vue';
 import { plans } from '@/data/plans';
 import { computed } from 'vue';
-const formDetails = defineModel<FormDetails>();
-const selectedPlan = computed(() => plans.filter(p => p.value == formDetails.plan));
-console.log("formDetails.plan", formDetails.value);
-console.log("selected", selectedPlan.value)
-console.log("plans", plans);
+import { addOns } from '@/data/add-ons';
 
-watchEffect(() => {
-  console.log('formDetails.plan =', JSON.stringify(formDetails.plan));
-  console.log('matching plan =', plans.find(p => p.value === formDetails.plan));
-});
+const formDetails = defineModel<FormDetails>({ required: true });
+const selectedPlan = computed(() => plans.find(p => p.value == formDetails.value.plan));
+const selectedAddOns = computed(() => addOns.filter(ao => formDetails.value.addOns.includes(ao.value as 'onlineService' | 'largerStorage' | 'customizableProfile')));
+
+const total = computed(() => {
+  let total = 0;
+  
+  if(formDetails.value.isYearly) {
+    total += selectedPlan.value?.yearlyCost;
+
+    selectedAddOns.value.forEach(ao => {
+      total += ao.yearlyCost;
+    })
+
+    return total;
+  }
+
+  total += selectedPlan.value?.monthlyCost;
+
+  selectedAddOns.value.forEach(ao => {
+    total += ao.monthlyCost;
+  })
+
+  return total;
+})
+
 </script>
 
 <template>
@@ -27,23 +45,22 @@ watchEffect(() => {
           <span class="plan">{{selectedPlan.name}} ({{ (formDetails.isYearly ? 'Yearly' : 'Monthly') }})</span>
           <a>Change</a>
         </div>
-        <span class="price">${{selectedPlan.cost}}/mo</span>
+        <span v-if="formDetails.isYearly" class="price">${{selectedPlan?.yearlyCost}}/yr</span>
+        <span v-else class="price">${{selectedPlan?.monthlyCost}}/mo</span>
       </div>
       <div class="spacer"></div>
       <ul class="selected-add-ons">
-        <li>
-          <span class="text-secondary">Online service</span>
-          <span class="price">+$1/mo</span>
-        </li>
-        <li>
-          <span class="text-secondary">Larger storage</span>
-          <span class="price">+2/mo</span>
+        <li v-for="addOn in selectedAddOns" :key="addOn.value">
+          <span class="text-secondary">{{addOn.name}}</span>
+          <span v-if="formDetails.isYearly" class="price">+${{addOn.yearlyCost}}/yr</span>
+          <span v-else class="price">+${{addOn.monthlyCost}}/mo</span>
         </li>
       </ul>
     </div>
     <div class="total">
-      <span class="text-secondary">Total (per month)</span>
-      <span class="total-price">+$12/mo</span>
+      <span class="text-secondary">Total (per {{formDetails.isYearly ? 'year' : 'month'}})</span>
+      <span v-if="formDetails.isYearly" class="total-price">+${{total}}/yr</span>
+      <span v-else class="total-price">+${{total}}/mo</span>
     </div>
   </div>
 </template>

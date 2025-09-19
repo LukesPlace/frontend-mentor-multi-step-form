@@ -107,31 +107,29 @@
  .form-content {
    width: 100%;
    height: 100%;
-   padding: 5% 10%;
+   padding: 5% 10% 0 10%;
    border-radius: 15px;
    display: flex;
    flex-direction: column;
+   justify-content: space-between;
  }
 
  .steps {
    max-height: 25rem;
  }
+ 
+ /* Remove max height as there is no footer for this step */
+ .steps:has(.thank-you-wrapper) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-height: none;
+}
 
  .content-footer {
-   margin-top: 2rem;
    display: flex;
    justify-content: space-between;
  }
 
- .secondary-button {
-   background-color: unset;
-   color: var(--grey-500);
-   padding: 1em;
-   justify-content: left;
- }
-
- .secondary-button:hover {
-   color: var(--primary-blue);
-   cursor: pointer;
- }
 </style>
