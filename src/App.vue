@@ -17,14 +17,18 @@
   }
   
   interface Step { id: string; description: string; } 
-  const steps: Array<Step> = [{ id: crypto.randomUUID(), description: "YOUR INFO" }, 
+
+  const steps: Array<Step> = [
+    { id: crypto.randomUUID(), description: "YOUR INFO" }, 
     { id: crypto.randomUUID(), description: "SELECT PLAN" }, 
     { id: crypto.randomUUID(), description: "ADD-ONS" }, 
-    { id: crypto.randomUUID(), description: "SUMMARY" },]
+    { id: crypto.randomUUID(), description: "SUMMARY" },
+  ]
     
-    const formDetails: Ref<FormDetails> = ref({ name: null, email: null, phone: null, plan: null, isYearly: false, addOns: [] }); const currentStep = ref(1); const personalInfoRef = ref<InstanceType<typeof PersonalInfo> | null>(null); 
-      
-    const selectPlanRef = ref<InstanceType<typeof SelectPlan> | null>(null); 
+  const formDetails: Ref<FormDetails> = ref({ name: null, email: null, phone: null, plan: null, isYearly: false, addOns: [] });
+  const currentStep = ref(1); 
+  const personalInfoRef = ref<InstanceType<typeof PersonalInfo> | null>(null); 
+  const selectPlanRef = ref<InstanceType<typeof SelectPlan> | null>(null); 
 
   function nextStep() { 
     let valid = true; 
@@ -65,10 +69,10 @@
           <ThankYou v-if="currentStep === 5"></ThankYou>
         </div>
         <div v-if="currentStep !== 5" class="content-footer">
-          <div> 
+          <div>
             <button v-if="currentStep !== 1" @click="currentStep -= 1" class="secondary-button">Go back</button>
           </div>
-          <button @click="nextStep">{{ currentStep !== 4 ? 'Next Step' : 'Confirm' }}</button>
+          <button id="nextStepButton" @click="nextStep">{{ currentStep !== 4 ? 'Next Step' : 'Confirm' }}</button>
         </div>
       </div>
     </div>
