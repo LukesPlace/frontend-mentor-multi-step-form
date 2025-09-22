@@ -121,7 +121,7 @@ defineExpose({ validate });
     flex-direction: row;
     justify-content: start;
     gap: 1rem;
-
+    padding: 0.5rem 1rem;
   }
 
   .plan img {

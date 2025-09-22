@@ -4,6 +4,7 @@ import { plans } from '@/data/plans';
 import { computed } from 'vue';
 import { addOns } from '@/data/add-ons';
 
+const emit = defineEmits(['changeAddOns']);
 const formDetails = defineModel<FormDetails>({ required: true });
 const selectedPlan = computed(() => plans.find(p => p.value == formDetails.value.plan));
 const selectedAddOns = computed(() => addOns.filter(ao => formDetails.value.addOns.includes(ao.value as 'onlineService' | 'largerStorage' | 'customizableProfile')) ?? null);
@@ -30,6 +31,10 @@ const total = computed(() => {
   return total;
 })
 
+function onChangeAddOns() {
+  emit('changeAddOns');
+}
+
 </script>
 
 <template>
@@ -43,7 +48,7 @@ const total = computed(() => {
       <div class="selected-plan-wrapper">
         <div class="selected-plan">
           <span class="plan">{{selectedPlan!.name}} ({{ (formDetails.isYearly ? 'Yearly' : 'Monthly') }})</span>
-          <a>Change</a>
+          <a @click="onChangeAddOns">Change</a>
         </div>
         <span v-if="formDetails.isYearly" class="price">${{selectedPlan?.yearlyCost}}/yr</span>
         <span v-else class="price">${{selectedPlan?.monthlyCost}}/mo</span>
